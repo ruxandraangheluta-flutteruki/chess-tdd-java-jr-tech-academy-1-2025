@@ -11,10 +11,6 @@ public class Pawn {
         this.pieceColor = pieceColor;
     }
 
-    public ChessBoard getChesssBoard() {
-        return chessBoard;
-    }
-
     public void setChessBoard(ChessBoard chessBoard) {
         this.chessBoard = chessBoard;
     }
@@ -35,16 +31,34 @@ public class Pawn {
         this.yCoordinate = value;
     }
 
-    public PieceColor getPieceColor() {
-        return this.pieceColor;
-    }
-
-    private void setPieceColor(PieceColor value) {
-        pieceColor = value;
+    public void setPieceColor(PieceColor value) {
+        this.pieceColor = value;
     }
 
     public void move(MovementType movementType, int newX, int newY) {
-        throw new UnsupportedOperationException("Need to implement Pawn.move()") ;
+        if (!chessBoard.isLegalBoardPosition(newX, newY)) {
+            return;
+        }
+
+        switch (movementType) {
+            case MOVE:
+                int direction;
+
+                if (this.pieceColor == PieceColor.WHITE) {
+                    direction = 1;
+                } else {
+                    direction = -1;
+                }
+
+                if (newX == this.xCoordinate && newY == this.yCoordinate + direction) {
+                    this.xCoordinate = newX;
+                    this.yCoordinate = newY;
+                }
+                break;
+
+            case CAPTURE:
+                break;
+        }
     }
 
     @Override
